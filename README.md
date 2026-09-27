@@ -1,7 +1,4 @@
-# Game Theory
 
-R&D on game theory: what it is, and how it shows up for a financial analyst and a
-quant trader. Start here, then follow the links below in order.
 
 - `foundations.md`: core concepts (equilibrium notions, canonical games, cooperative
   game theory, repeated games, evolutionary game theory, mechanism design).
