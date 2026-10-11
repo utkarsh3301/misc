@@ -40,6 +40,12 @@ cointegrated spread (pairs trading).
 bands are `open + k * intraday['range'][date]`. That row of the rolling window includes day D
 itself, whose high and low have not happened yet at 3:00. Fix: shift the range by one day.
 
+For contrast, the Dual Thrust template in vnpy (https://github.com/vnpy/vnpy_ctastrategy,
+`strategies/dual_thrust_strategy.py`) computes the range from the previous day's high and low at
+the first bar of the new day, and vnpy's backtester fills a stop order on the next bar at
+`max(stop price, bar open)`, so a gap through the stop is charged at the worse open. That is
+what an honest version looks like.
+
 **2. Pairs trading mixes units in its entry bands.** When a pair becomes cointegrated, the
 bands are set as `z_upper = z_now + std(residual)` and `z_lower = z_now - std(residual)`.
 `z` is a unitless z-score, `std(residual)` is in price units. So the band width depends on
