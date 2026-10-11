@@ -1,6 +1,6 @@
 # Open-source trading tools: where is the edge?
 
-Nine popular open-source trading tools, strategy collections and libraries, read
+Ten popular open-source trading tools, strategy collections and libraries, read
 from the source code and then tested on real market data. For each one the question is the same: where is the edge
 supposed to come from, and does it survive an honest test?
 
@@ -21,6 +21,7 @@ be regenerated from the scripts in each folder.
 | 07 | [FinGPT](07-fingpt) | Open financial LLMs for sentiment and forecasting | Cheap, accurate text classification | Forecaster targets are written by GPT-4 after being told the answer. Weekly stock direction is mostly the market's direction. |
 | 08 | [ta, pandas-ta, stockstats](08-ta-libraries) | Standard indicator libraries | Not strategies, but a leaking indicator manufactures a fake edge | An automatic truncation test: ta is clean (86 of 86), so is stockstats apart from its future-offset column syntax. pandas-ta leaks future bars in DPO, Ichimoku, VHM, TOS StDevAll and zigzag by default; its zigzag "backtest mode" is one bar short; VHM passes a window length where Python expects a mean. |
 | 09 | [PyPortfolioOpt](09-pyportfolioopt) | Optimal portfolios: max Sharpe, min volatility, HRP | Risk-only methods (min volatility Sharpe 0.63, HRP 0.54) beat equal weight (0.45) | Max Sharpe on historical returns expected a Sharpe of 4.1 each month and delivered 0.25, with 44% in one stock and 91% monthly turnover. HRP crashes on current SciPy. |
+| 10 | [backtrader](10-backtrader) | Event-driven backtesting engine | Not a strategy; honest next-bar-open fills by default | Zero commission and slippage by default. The default Sharpe analyzer uses one return per year, so a 3-year test gives a Sharpe from 3 points (one stock: -2.87 vs -0.33 from daily data). Unmaintained since 2023. |
 
 ## What they have in common
 
@@ -36,11 +37,12 @@ The same handful of mistakes shows up again and again. In rough order of how muc
    (quant-trading, TradingAgents before 2026, Vibe-Trading's own changelog, pandas-ta.)
 4. **Fills that cannot happen.** Same-bar execution, no costs, ignoring price bands and
    locked limit moves. Ignoring limits alone overstated a reversal strategy by about 6 points
-   a year. (quant-trading, qlib replica.)
+   a year. (quant-trading, qlib replica, backtrader's zero-cost defaults.)
 5. **Unit and library bugs.** Adding a price to a z-score, counting a premium in the wrong
    units, a pandas upgrade that silently switches a strategy off. (quant-trading.)
 6. **No baseline.** No random agent, no "always up", no "follow the index", no noise proposer,
-   no equal weight.
+   no equal weight. And ratios computed from too few independent points (backtrader's yearly
+   Sharpe, FinGPT's ~35 effective weeks).
    Every tool here looks better without one.
 
 ## Where real edge showed up
@@ -97,7 +99,7 @@ Every folder has an `experiments/` directory and a "Reproduce" section. The comm
 ```
 curl -L -o cn.zip https://github.com/SunsetWolf/qlib_dataset/releases/download/v2/qlib_data_simple_cn_1d_latest.zip
 unzip cn.zip -d cn
-pip install numpy pandas lightgbm statsmodels matplotlib openpyxl ta pandas-ta stockstats pyportfolioopt
+pip install numpy pandas lightgbm statsmodels matplotlib openpyxl ta pandas-ta stockstats pyportfolioopt backtrader
 ```
 
 Scripts read qlib's binary files directly, so qlib does not need to be installed. Scripts that
