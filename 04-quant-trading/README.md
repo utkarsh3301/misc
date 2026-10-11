@@ -110,7 +110,7 @@ Thrust is rebuilt on daily bars with k = 0.5 and a 4-day range.
 **Where the MA cross edge comes from.** Year by year, the honest MA cross lost 27% in 2008
 against 81% for buy and hold, and that one year is most of its Sharpe advantage. Excluding the
 two crash years (2008 and 2015), its Sharpe is 0.66 against 0.71 for simply holding. The trend
-filter is a crash insurance policy that costs you in every normal year (2009: +47% vs +93%;
+filter is a crash insurance policy that costs you in every rising year (2009: +47% vs +93%;
 2019: +20% vs +36%).
 
 **Sweeping the windows makes it worse, not better.** The MACD script asks the user for two

@@ -1,7 +1,7 @@
 # Open-source trading tools: where is the edge?
 
-Eight popular open-source trading tools, strategy collections and indicator libraries, read from the source code
-and then tested on real market data. For each one the question is the same: where is the edge
+Eight popular open-source trading tools, strategy collections and indicator libraries, read
+from the source code and then tested on real market data. For each one the question is the same: where is the edge
 supposed to come from, and does it survive an honest test?
 
 All experiments use real daily data for China's CSI300 stocks (2005 to mid 2021, from qlib's
@@ -46,7 +46,7 @@ The same handful of mistakes shows up again and again. In rough order of how muc
 - **Short-horizon reversal in China A-shares** (qlib): real, measurable, monotonic across
   deciles. Thin after costs and limits, and fading.
 - **Trend filter as crash insurance** (quant-trading MA cross): it cut 2008's loss from -81% to
-  -27% but gave up return in almost every normal year. Its Sharpe advantage disappears once 2008
+  -27% but gave up return in every rising year. Its Sharpe advantage disappears once 2008
   and 2015 are excluded.
 
 Neither is the kind of edge the tools advertise. Both come from market structure and from
@@ -78,11 +78,12 @@ Most findings carry over directly; a few get sharper:
   turnover (10% of the book a day) that is about 5.6% a year, close to the A-share cost drag.
   Verify current rates before relying on them; they change with budgets.
 - **Settlement.** India's T+1 is a settlement cycle, not China's ban on selling same-day
-  purchases. Engines borrowed from China models (05) get this wrong.
-- **Algo rules.** Since April 2026 exchange-registered algo IDs, static IPs and a kill switch apply
-  to API order flow, which matters for anything that goes from backtest to live.
-- **F&O.** None of the eight tools models Indian lot sizes, expiries, margins or option STT
-  properly. Any options backtest should pass the unit test in 04: premiums, strikes and spot all
+  purchases. An engine that treats it as a same-day sell ban (05) gets this wrong.
+- **Algo rules.** Under SEBI's retail algo framework (in force from April 2026), API order flow
+  needs exchange-registered algo IDs, static IPs and a kill switch, which matters for anything that
+  goes from backtest to live.
+- **F&O.** None of the tools studied here models Indian F&O end to end (lot sizes, expiries,
+  margins, option STT); Vibe-Trading's India engine explicitly leaves F&O out. Any options backtest should pass the unit test in 04: premiums, strikes and spot all
   in rupees per lot.
 
 ## Reproducing

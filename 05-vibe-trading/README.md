@@ -43,8 +43,15 @@ record the kinds of bugs that quietly inflate or distort a backtest. A selection
 | 24 Alpha Zoo factors | A missing bar inside the window made a comparison read False and emit a constant | Sep 21, #1523 |
 | Alpha bench on CSI300 / S&P 500 | Survivorship bias, now disclosed in the report | #859, #1289 |
 
-If a project with hundreds of contributors and a large test suite shipped these, any home-grown
+If a project with dozens of contributors and a large test suite shipped these, any home-grown
 backtester should be assumed to have some of them too.
+
+**Independent check: the Alpha Zoo is clean today.** I ran all 462 factors through the
+project's own `Registry.compute()` on 40 CSI300 stocks (2016 to 2020) and applied the truncation
+test from 08-ta-libraries: recompute each factor with every bar after a cut date deleted, at 6 cut
+dates, and compare. 437 factors ran (23 were skipped by the registry for needing sector, market cap
+or fundamentals; 2 raised errors), and none changed its value on day t when later bars were
+removed. Whatever bugs the changelog records, the factor library as shipped passes.
 
 ### 2. The India engine (relevant to NSE work)
 
@@ -56,7 +63,8 @@ transaction charge 0.00297%, SEBI fee Rs 10 per crore, GST 18% on brokerage and 
   10% bands, and those are exactly the names a reversal or breakout strategy wants. A 20% band
   lets the backtest fill trades that would have been locked in reality. (See 01-qlib: ignoring
   limits overstated a reversal strategy by about 6 points a year.)
-- **"T+1" borrowed from the China engine.** It blocks selling shares bought on the same bar.
+- **"T+1" treated as a same-day sell ban.** It blocks selling shares bought on the same bar
+  (the circuit check itself is imported from the China engine).
   India's T+1 is a settlement cycle, not a trading ban: a same-day sale is allowed and is simply
   taxed as intraday. Harmless on daily bars, wrong for anything finer.
 - **DP charges default to 0.** The depository charge per scrip per sell day is small but
@@ -119,4 +127,5 @@ curl -L -o cn.zip https://github.com/SunsetWolf/qlib_dataset/releases/download/v
 unzip cn.zip -d cn
 git clone --depth 1 https://github.com/HKUDS/Vibe-Trading
 python experiments/robot_traders_vs_bias_detectors.py ./Vibe-Trading ./cn
+python experiments/alpha_zoo_truncation_test.py ./Vibe-Trading ./cn
 ```
