@@ -1,6 +1,6 @@
 # Open-source trading tools: where is the edge?
 
-Ten popular open-source trading tools, strategy collections and libraries, read
+Eleven popular open-source trading tools, strategy collections and libraries, read
 from the source code and then tested on real market data. For each one the question is the same: where is the edge
 supposed to come from, and does it survive an honest test?
 
@@ -22,6 +22,7 @@ be regenerated from the scripts in each folder.
 | 08 | [ta, pandas-ta, stockstats](08-ta-libraries) | Standard indicator libraries | Not strategies, but a leaking indicator manufactures a fake edge | An automatic truncation test: ta is clean (86 of 86), so is stockstats apart from its future-offset column syntax. pandas-ta leaks future bars in DPO, Ichimoku, VHM, TOS StDevAll and zigzag by default; its zigzag "backtest mode" is one bar short; VHM passes a window length where Python expects a mean. |
 | 09 | [PyPortfolioOpt](09-pyportfolioopt) | Optimal portfolios: max Sharpe, min volatility, HRP | Risk-only methods (min volatility Sharpe 0.63, HRP 0.54) beat equal weight (0.45) | Max Sharpe on historical returns expected a Sharpe of 4.1 each month and delivered 0.25, with 44% in one stock and 91% monthly turnover. HRP crashes on current SciPy. |
 | 10 | [backtrader](10-backtrader) | Event-driven backtesting engine | Not a strategy; honest next-bar-open fills by default | Zero commission and slippage by default. The default Sharpe analyzer uses one return per year, so a 3-year test gives a Sharpe from 3 points (one stock: -2.87 vs -0.33 from daily data). Unmaintained since 2023. |
+| 11 | [mibian](11-mibian) | Options pricing, greeks and implied vol | Not a strategy; IVs good to about 0.1 vol point on NIFTY-style weeklies | Tolerance comes from `str(price)`, so 0.10 premiums are matched to +/-0.05 (up to 0.9 vol points off). Bad quotes return a near-zero vol silently; `days=0` on expiry day crashes. |
 
 ## What they have in common
 
@@ -89,7 +90,8 @@ Most findings carry over directly; a few get sharper:
   needs exchange-registered algo IDs, static IPs and a kill switch, which matters for anything that
   goes from backtest to live.
 - **F&O.** None of the tools studied here models Indian F&O end to end (lot sizes, expiries,
-  margins, option STT); Vibe-Trading's India engine explicitly leaves F&O out. Any options backtest should pass the unit test in 04: premiums, strikes and spot all
+  margins, option STT); Vibe-Trading's India engine explicitly leaves F&O out. For IV on
+  weeklies, see 11: solve exactly, pass intraday time fractions, and filter bad quotes first. Any options backtest should pass the unit test in 04: premiums, strikes and spot all
   in rupees per lot.
 
 ## Reproducing
