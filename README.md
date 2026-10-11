@@ -1,6 +1,6 @@
 # Open-source trading tools: where is the edge?
 
-Eight popular open-source trading tools, strategy collections and indicator libraries, read
+Nine popular open-source trading tools, strategy collections and libraries, read
 from the source code and then tested on real market data. For each one the question is the same: where is the edge
 supposed to come from, and does it survive an honest test?
 
@@ -20,12 +20,13 @@ be regenerated from the scripts in each folder.
 | 06 | [RD-Agent(Q)](06-rd-agent) (Microsoft) | An LLM mines factors for 2x the return | A cheap, fast factor-idea generator | Factors are accepted by looking at the test period. A noise proposer under the same rule "finds" IC that vanishes out of sample. |
 | 07 | [FinGPT](07-fingpt) | Open financial LLMs for sentiment and forecasting | Cheap, accurate text classification | Forecaster targets are written by GPT-4 after being told the answer. Weekly stock direction is mostly the market's direction. |
 | 08 | [ta, pandas-ta, stockstats](08-ta-libraries) | Standard indicator libraries | Not strategies, but a leaking indicator manufactures a fake edge | An automatic truncation test: ta is clean (86 of 86), so is stockstats apart from its future-offset column syntax. pandas-ta leaks future bars in DPO, Ichimoku, VHM, TOS StDevAll and zigzag by default; its zigzag "backtest mode" is one bar short; VHM passes a window length where Python expects a mean. |
+| 09 | [PyPortfolioOpt](09-pyportfolioopt) | Optimal portfolios: max Sharpe, min volatility, HRP | Risk-only methods (min volatility Sharpe 0.63, HRP 0.54) beat equal weight (0.45) | Max Sharpe on historical returns expected a Sharpe of 4.1 each month and delivered 0.25, with 44% in one stock and 91% monthly turnover. HRP crashes on current SciPy. |
 
 ## What they have in common
 
 The same handful of mistakes shows up again and again. In rough order of how much damage they do:
 
-1. **Choosing on the test set.** Picking the best model, strike, factor or agent after seeing
+1. **Choosing on the test set.** Picking the best model, strike, factor, weights or agent after seeing
    the period you report on. (RD-Agent, FinRL comparisons, the options straddle. A 415-pair
    moving-average sweep picked a winner that then did worse than 61% of the pairs.)
 2. **Testing on one friendly window.** A single bull run makes anything long look smart.
@@ -38,19 +39,22 @@ The same handful of mistakes shows up again and again. In rough order of how muc
    a year. (quant-trading, qlib replica.)
 5. **Unit and library bugs.** Adding a price to a z-score, counting a premium in the wrong
    units, a pandas upgrade that silently switches a strategy off. (quant-trading.)
-6. **No baseline.** No random agent, no "always up", no "follow the index", no noise proposer.
+6. **No baseline.** No random agent, no "always up", no "follow the index", no noise proposer,
+   no equal weight.
    Every tool here looks better without one.
 
 ## Where real edge showed up
 
 - **Short-horizon reversal in China A-shares** (qlib): real, measurable, monotonic across
   deciles. Thin after costs and limits, and fading.
+- **Risk-only portfolio construction** (PyPortfolioOpt): min volatility and HRP beat equal weight
+  out of sample; max Sharpe on historical returns lost to it badly.
 - **Trend filter as crash insurance** (quant-trading MA cross): it cut 2008's loss from -81% to
   -27% but gave up return in every rising year. Its Sharpe advantage disappears once 2008
   and 2015 are excluded.
 
-Neither is the kind of edge the tools advertise. Both come from market structure and from
-risk control, not from the model.
+None of these is the kind of edge the tools advertise. All three come from market structure
+and from risk control, not from a cleverer model.
 
 ## A checklist before trusting any backtest
 
@@ -93,7 +97,7 @@ Every folder has an `experiments/` directory and a "Reproduce" section. The comm
 ```
 curl -L -o cn.zip https://github.com/SunsetWolf/qlib_dataset/releases/download/v2/qlib_data_simple_cn_1d_latest.zip
 unzip cn.zip -d cn
-pip install numpy pandas lightgbm statsmodels matplotlib openpyxl ta pandas-ta
+pip install numpy pandas lightgbm statsmodels matplotlib openpyxl ta pandas-ta stockstats pyportfolioopt
 ```
 
 Scripts read qlib's binary files directly, so qlib does not need to be installed. Scripts that
