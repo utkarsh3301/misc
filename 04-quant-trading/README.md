@@ -53,6 +53,24 @@ including prices that have not happened yet.
 chained assignment (`signals['z'].iloc[i:] = ...`). Under pandas 3 copy-on-write those writes
 are dropped without an error, so `z` stays empty and the strategy never enters a trade.
 
+**5. The options straddle undercounts its own premium by 10x and picks the strike after
+expiry.** `straddle()` multiplies spot by the contract size (10 EUR per STOXX 50 point) and the
+profit line multiplies the strike too, but the call and put premiums, also quoted in index
+points, are left unscaled. `main()` then loops over every strike, and the comments describe
+picking "the optimal strike price to maximize our profit", which can only be known at expiry.
+The entry rule (buy when call and put prices are within 2 points) says nothing about whether
+volatility is cheap, which is the only reason to own a straddle.
+
+Re-running it on the repo's own data (August 2019 expiry):
+
+| Strike | Entry | Premium (points) | PnL as the repo computes it | PnL with premium in EUR |
+|---|---|---|---|---|
+| 3350 | 2019-04-03 | 224.4 | -15 | -2,035 |
+| 3375 | 2019-06-10 | 158.3 | +301 | -1,124 |
+| 3450 | 2019-06-21 | 133.7 | +1,076 | -128 |
+
+Two of three trades look profitable as written. With consistent units, none are.
+
 ### Experiments on real data (about 300 CSI300 stocks, 2008 to 2021)
 
 **Pairs trading is not unit invariant.** Running the repo's own `signal_generation` and
@@ -89,6 +107,21 @@ two crash years (2008 and 2015), its Sharpe is 0.66 against 0.71 for simply hold
 filter is a crash insurance policy that costs you in every normal year (2009: +47% vs +93%;
 2019: +20% vs +36%).
 
+**Sweeping the windows makes it worse, not better.** The MACD script asks the user for two
+windows, which invites trying many and keeping the best. I swept 415 (fast, slow) pairs on
+2008-2014 and looked at 2015-2021, honest execution throughout:
+
+| | Sharpe 2008-2014 | Sharpe 2015-2021 |
+|---|---|---|
+| Best pair in-sample (42 / 100) | 0.82 | 0.37 |
+| Top 10% of pairs in-sample (average) | 0.75 | 0.36 |
+| Median pair | 0.56 | 0.39 |
+| Buy and hold | 0.33 | 0.53 |
+
+The chosen pair did worse out of sample than 61% of all the pairs, and the rank correlation
+between in-sample and out-of-sample Sharpe across pairs was negative (-0.19). Picking the best
+backtest selected for whatever happened to suit 2008-2014, mostly sitting out the 2008 crash.
+
 **Look-ahead does not always flatter.** The Dual Thrust leak made results far worse here, not
 better: putting today's range into today's bands places entries near the day's extremes. The
 lesson is not "look-ahead inflates returns", it is "look-ahead makes the number meaningless
@@ -106,9 +139,12 @@ a major crash, paid for with lower returns in ordinary years.
 - Fill on the next bar, always, and charge costs. Same-bar fills at zero cost should be
   treated as a bug.
 - Any rolling statistic used for an intraday threshold must end on the previous session.
-- Run a scale test (multiply prices by 10) on any stat-arb code. Unit bugs show up instantly.
+- Run a scale test (multiply prices by 10) on any stat-arb or options code. Unit bugs show up
+  instantly. For options, keep premiums, strikes and spot in the same currency per contract.
 - Pin library versions. Silent behaviour changes (pandas copy-on-write) can turn a strategy
   off without an error.
+- Never ship the best cell of a parameter sweep. Pick from a stable region, then confirm on a
+  later period.
 - Judge trend filters on non-crash years separately. If the edge is one crash, size it like
   insurance, not like alpha.
 
@@ -119,7 +155,10 @@ curl -L -o cn.zip https://github.com/SunsetWolf/qlib_dataset/releases/download/v
 unzip cn.zip -d cn
 git clone --depth 1 https://github.com/je-suis-tm/quant-trading
 python experiments/execution_and_lookahead.py ./cn
+python experiments/ma_sweep_overfit.py ./cn
 # pairs test runs the repo's own functions; needs pandas 2.x and statsmodels
 pip install "pandas<3" statsmodels matplotlib
 python experiments/pair_trading_scale_test.py ./quant-trading ./cn
+pip install openpyxl
+python experiments/options_straddle_check.py ./quant-trading
 ```

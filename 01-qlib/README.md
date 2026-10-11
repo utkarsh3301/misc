@@ -74,8 +74,9 @@ signal, excess return over the equal-weight universe, 2017-01 to 2020-07:
 | Respect limits, costs doubled | +7.2% | 0.35 |
 
 About 10% of the book turns over every day, so costs alone are roughly 5% a year. Ignoring
-the limit rule overstates returns by about 6 points a year, because a reversal strategy wants
-to buy exactly the stocks that are locked limit-down.
+the limit rule overstates returns by about 6 points a year. Without it, the backtest buys stocks
+at a limit-up close (in reality the queue of buyers does not get filled) and sells at a limit-down
+close (no buyers), and those impossible fills turn out to be valuable ones.
 
 **6. The edge is decaying.** Rank IC of the same trained model by year: 2017 0.058, 2018
 0.036, 2019 0.019, 2020 0.027. On the 10 months after qlib's benchmark window (2020-08 to
