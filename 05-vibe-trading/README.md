@@ -56,7 +56,7 @@ removed. Whatever bugs the changelog records, the factor library as shipped pass
 ### 2. The India engine (relevant to NSE work)
 
 `agent/backtest/engines/india_equity.py` models NSE cash delivery on daily bars. The cost stack
-matches current published rates: STT 0.1% on both sides, stamp duty 0.015% on buys, NSE
+matches the published rates as of 2026 (verify before relying on them): STT 0.1% on both sides, stamp duty 0.015% on buys, NSE
 transaction charge 0.00297%, SEBI fee Rs 10 per crore, GST 18% on brokerage and charges. Gaps:
 
 - **One circuit band for every stock, default 20%.** Many small and mid caps sit in 2%, 5% or

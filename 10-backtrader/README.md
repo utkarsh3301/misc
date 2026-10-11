@@ -6,8 +6,8 @@ Studied: shallow clone of `master` (last commit April 2023) and the PyPI package
 ## What it is
 
 One of the most used Python backtesting engines, especially among retail and semi-professional
-traders. You write a `Strategy` class, add data feeds,
-brokers and analyzers to a `Cerebro`, and it simulates the orders bar by bar. It is no longer
+traders. You write a `Strategy` class, add data feeds, brokers and analyzers to a `Cerebro`,
+and it simulates the orders bar by bar. It is no longer
 actively maintained: the last commit is from April 2023.
 
 ## How it works (from the source)
