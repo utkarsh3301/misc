@@ -74,7 +74,11 @@ a coin flip (95% confidence, 80% power) you need about 2,200 independent decisio
 LLM calls each, that is 44,000 to 66,000 calls, and decisions on the same date across
 tickers are not independent (they share the market move), so the real requirement is higher.
 
-**5. The output is a mood, not a position.** Buy / Overweight / Hold / Underweight / Sell has no
+**5. The technical indicators themselves are clean.** The market analyst computes its
+indicators with stockstats. I ran all 13 it requests through a truncation test (see
+08-ta-libraries): none use future bars.
+
+**6. The output is a mood, not a position.** Buy / Overweight / Hold / Underweight / Sell has no
 size, no stop, no horizon other than the 5-day scoring window. Turning it into a portfolio is
 left to the user.
 

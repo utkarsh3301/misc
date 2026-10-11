@@ -1,12 +1,14 @@
-# 08. Technical-indicator libraries: ta and pandas-ta
+# 08. Technical-indicator libraries: ta, pandas-ta and stockstats
 
 Repos: https://github.com/bukosabino/ta (clone of `master`, last commit March 2026) and the
-`pandas-ta` package from PyPI, version 0.4.71b0 (project: https://github.com/twopirllc/pandas-ta).
+`pandas-ta` package from PyPI, version 0.4.71b0 (project: https://github.com/twopirllc/pandas-ta),
+plus `stockstats` 0.6.9 from PyPI (project: https://github.com/jealous/stockstats), the library
+TradingAgents uses.
 
-## Why these two
+## Why these
 
 Almost every strategy in folders 01 to 07 starts from indicators like these, and most retail
-and many professional Python backtests import one of these two libraries. If an indicator
+and many professional Python backtests import one of these libraries. If an indicator
 quietly uses future bars, every strategy built on it inherits a look-ahead nobody wrote.
 
 ## How I tested them: an automatic look-ahead detector
@@ -43,6 +45,14 @@ the safe choice.
 shifting the result one extra bar passes cleanly. So a strategy
 using `zigzag(backtest=True)` still sees each swing point one bar early.
 
+**stockstats 0.6.9 (used by TradingAgents): clean, with one sharp edge.** The 13 indicators
+TradingAgents' market analyst requests (SMA 50/200, EMA 10, MACD and signal and histogram, RSI,
+Bollinger bands, ATR, VWMA, MFI) and 40 other stockstats indicators all pass. The one failure is
+by design: in stockstats column names, a negative offset reads the past and a positive offset reads
+the future (the source says so: "positive values meaning data in the future"). `close_-2_r` is a
+feature, `close_2_r` is a peek, and the detector flags the second on 39 of 40 cut dates. One
+missing minus sign is all it takes.
+
 ## The edge, in one line
 
 These are tools, not strategies, so there is no edge to find. But a leaking indicator manufactures
@@ -57,6 +67,7 @@ backtest better than it can trade.
   (`dpo(centered=False)`, `ichimoku(lookahead=False)`); never use `vhm`, `tos_stdevall` or
   `zigzag` in a backtest without fixing them.
 - "Backtest mode" flags in libraries need testing too, not trusting.
+- With stockstats-style column names, lint for positive offsets before anything reaches a model.
 
 ## Reproduce
 
@@ -65,6 +76,8 @@ curl -L -o cn.zip https://github.com/SunsetWolf/qlib_dataset/releases/download/v
 unzip cn.zip -d cn
 pip install pandas-ta ta
 python experiments/lookahead_detector.py ./cn
+pip install stockstats
+python experiments/stockstats_check.py ./cn
 ```
 
 If `pip install ta` fails to build, clone https://github.com/bukosabino/ta and put the clone on
