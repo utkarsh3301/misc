@@ -1,0 +1,81 @@
+== 1. coverage
+{'first_window_start': '2014-01-03', 'last_window_start': '2018-11-28', 'daily_windows': 1236, 'nonoverlap_windows': 59}
+
+== 2. size of the premium (vol points, variance points)
+  mean_vix                                     14.723
+  mean_realized_vol_forward                    11.719
+  mean_vrp_volpts                               3.004
+  share_windows_vix_above_realized              0.817
+  mean_strike_var_pts                         233.364
+  mean_realized_var_pts                       169.410
+  realized_over_strike_var_ratio                0.726
+
+== 3. payoff statistics, non-overlapping monthly windows, averaged over 21 start offsets
+           mean_per_window  sharpe_mean_over_offsets  sharpe_min  sharpe_max  t_naive_mean  n_per_offset
+payoff                                                                                                  
+R_var                0.236                     0.943       0.609       1.237         2.088            59
+R_var_cap            0.236                     0.943       0.619       1.237         2.089            59
+R_vol                0.202                     1.954       1.674       2.157         4.327            59
+
+== 4. offset-0 sample: full description and HAC t-stat on all overlapping daily windows
+  R_var      n= 59 mean=0.231 sd=0.917 SRann=0.87 t_naive=1.94 t_NW(daily,20lags)=2.62 skew=-3.37 kurt=16.39 worst=-4.44 pos=0.81
+  R_var_cap  n= 59 mean=0.231 sd=0.917 SRann=0.87 t_naive=1.94 t_NW(daily,20lags)=2.62 skew=-3.37 kurt=16.39 worst=-4.44 pos=0.81
+  R_vol      n= 59 mean=0.209 sd=0.382 SRann=1.90 t_naive=4.21 t_NW(daily,20lags)=5.44 skew=-2.00 kurt=7.91 worst=-1.33 pos=0.81
+
+== 5. by calendar year of window start (all daily windows)
+      n_days  mean_vix  mean_rv_vol  mean_vrp_volpts  mean_R_var  mean_R_var_cap  mean_R_vol  share_R_var_neg
+Date                                                                                                         
+2014     251    14.176       11.061            3.114       0.305           0.305       0.210            0.219
+2015     252    16.674       14.813            1.861      -0.010          -0.010       0.081            0.210
+2016     252    15.826       11.274            4.552       0.448           0.448       0.293            0.135
+2017     251    11.090        6.753            4.338       0.601           0.601       0.384            0.000
+2018     230    15.938       14.952            0.985      -0.202          -0.202       0.028            0.365
+
+== 6. worst non-overlapping windows (offset 0)
+              vix  rv_vol  R_var  R_var_cap  R_vol  ret_fwd
+Date                                                       
+2015-08-05  12.51  29.176 -4.439     -4.439 -1.332   -0.073
+2018-01-04   9.22  18.514 -3.032     -3.032 -1.008   -0.028
+2018-10-04  14.22  23.770 -1.794     -1.794 -0.672   -0.064
+2016-06-06  13.65  18.789 -0.895     -0.895 -0.377   -0.005
+2014-12-03  12.47  16.325 -0.714     -0.714 -0.309   -0.026
+2018-03-07  17.76  22.608 -0.620     -0.620 -0.273   -0.046
+  worst single daily-start window across all 21 offsets:
+              vix  rv_vol  R_var  R_var_cap  R_vol  ret_fwd
+Date                                                       
+2015-08-10  12.23  30.811 -5.347      -5.25 -1.519    -0.08
+
+== 7. fragility: drop the single worst window, and drop Jan-Feb 2018 start dates
+  R_var {'sharpe_all': 0.87, 'sharpe_drop_worst_window': 1.58, 'sharpe_ex_janfeb2018_starts': 1.18, 't_nw_all_daily': 2.62, 't_nw_ex_event_daily': 4.02}
+  R_var_cap {'sharpe_all': 0.87, 'sharpe_drop_worst_window': 1.58, 'sharpe_ex_janfeb2018_starts': 1.18, 't_nw_all_daily': 2.62, 't_nw_ex_event_daily': 4.02}
+  R_vol {'sharpe_all': 1.9, 'sharpe_drop_worst_window': 2.51, 'sharpe_ex_janfeb2018_starts': 2.23, 't_nw_all_daily': 5.44, 't_nw_ex_event_daily': 6.83}
+
+== 8. verifiability math (offset-0 monthly sample)
+  R_var      SR=0.87 SE=0.66 boot95=[0.02,2.88] yrs_needed(95% 1-sided)=7.5 (normal-returns case 3.7) sample=4.9y
+  R_var_cap  SR=0.87 SE=0.66 boot95=[0.02,2.88] yrs_needed(95% 1-sided)=7.5 (normal-returns case 3.7) sample=4.9y
+  R_vol      SR=1.90 SE=0.74 boot95=[0.87,3.58] yrs_needed(95% 1-sided)=2.0 (normal-returns case 0.9) sample=4.9y
+
+== 9. deflated Sharpe ratio across the 3 payoff definitions tried
+  R_var      DSR (prob. true Sharpe beats luck benchmark) = 0.713
+  R_var_cap  DSR (prob. true Sharpe beats luck benchmark) = 0.713
+  R_vol      DSR (prob. true Sharpe beats luck benchmark) = 0.971
+
+== 10. market exposure of the short-variance payoff (offset-0 monthly)
+  R_var {'beta': 21.075, 'beta_t': 3.73, 'alpha_per_window': 0.092, 'alpha_t': 0.823, 'r2_linear': 0.447, 'quad_mkt_sq_coef': -330.464, 'quad_mkt_sq_t': -3.483, 'r2_quadratic': 0.618}
+  R_var_cap {'beta': 21.075, 'beta_t': 3.73, 'alpha_per_window': 0.092, 'alpha_t': 0.823, 'r2_linear': 0.447, 'quad_mkt_sq_coef': -330.464, 'quad_mkt_sq_t': -3.483, 'r2_quadratic': 0.618}
+  R_vol {'beta': 9.413, 'beta_t': 5.498, 'alpha_per_window': 0.147, 'alpha_t': 3.909, 'r2_linear': 0.514, 'quad_mkt_sq_coef': -110.139, 'quad_mkt_sq_t': -5.104, 'r2_quadratic': 0.622}
+
+== 11. forecasting regressions on all daily windows (HAC 20 lags)
+  mincer_zarnowitz_slope_on_K                  0.4896
+  mincer_zarnowitz_slope_t_vs_zero             6.1999
+  mincer_zarnowitz_slope_t_vs_one             -6.4635
+  mincer_zarnowitz_const                       0.0055
+  mincer_zarnowitz_r2                          0.1805
+  joint_slope_K                                0.4307
+  joint_slope_rv_trail                         0.0755
+  joint_r2                                     0.1830
+  ret_on_exante_vrp_coef                       0.3257
+  ret_on_exante_vrp_t                          1.7777
+  ret_on_exante_vrp_r2                         0.0158
+
+saved results/vrp_summary.json and results/vrp_monthly_offset0.csv
