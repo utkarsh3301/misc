@@ -19,7 +19,7 @@ The sandbox's network policy blocked every market-data host needed (Cboe, FRED, 
 so there is no option-chain or index-level backtest here. Real data used is the S&P 500 (1999 to 2018), VIX
 (2014 to 2018) and Fama-French monthly factors bundled in the `arch` package. Literature numbers come from
 web-search summaries and are second-hand; see `ledger/claims.md` for each claim, its source and a status code.
-REPORT.md section 7 lists what to unlock to finish the verification.
+REPORT.md section 8 lists what to unlock to finish the verification.
 
 ## Reproduce
 

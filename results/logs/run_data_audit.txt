@@ -1,0 +1,28 @@
+== S&P 500
+  rows                         5031
+  duplicate_dates              0
+  non_positive                 0
+  rows_per_year_min_max        [248, 253]
+  largest_calendar_gaps        {'2001-09-17': 7, '2007-01-03': 5, '2012-10-31': 5}
+  worst_days                   {'2008-10-15': -0.09034977815503098, '2008-12-01': -0.08929524334213201, '2008-09-29': -0.08806776252494941}
+  best_days                    {'2008-10-13': 0.11580036960722695, '2008-10-28': 0.10789005893857073, '2009-03-23': 0.07075754880248986}
+== VIX
+  rows                         1259
+  duplicate_dates              0
+  min                          9.14
+  max                          40.74
+  non_positive                 0
+  dates_not_in_spx             2
+== VIX versus S&P 500 alignment (correlation of daily log VIX change with S&P 500 return shifted by lag)
+  lag -2: +0.004
+  lag -1: -0.020
+  lag +0: -0.817
+  lag +1: +0.046
+  lag +2: +0.055
+== Fama-French market versus S&P 500 monthly price return
+  months                       238
+  first                        1999-02
+  last                         2018-11
+  correlation                  0.9866299221890161
+  mean_abs_difference          0.004769462679659926
+saved results/data_audit.json

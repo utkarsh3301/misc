@@ -153,5 +153,30 @@ class TestIndexCompare(unittest.TestCase):
         self.assertAlmostEqual(hand, 2.05, places=2)
 
 
+class TestDataAudit(unittest.TestCase):
+    def test_bundled_series_are_aligned_and_consistent(self):
+        audit = load_script("run_data_audit").audit()
+        lag = audit["vix_spx_alignment"]["corr_dlogvix_vs_spx_return_by_lag"]
+        self.assertLess(lag[0], -0.7)
+        for k in (-2, -1, 1, 2):
+            self.assertLess(abs(lag[k]), 0.15)
+        self.assertGreater(audit["french_vs_spx_monthly"]["correlation"], 0.98)
+        self.assertEqual(audit["spx"]["duplicate_dates"], 0)
+        self.assertEqual(audit["vix"]["duplicate_dates"], 0)
+
+
+class TestRuleSplit(unittest.TestCase):
+    def test_in_and_out_of_sample_partition_the_monthly_grid(self):
+        rules = load_script("run_conditional_rules")
+        df = vrp.add_payoffs(vrp.load_frame(21)).dropna(subset=["vix"])
+        df, w = rules.build_weights(df)
+        start = df["vix_med252"].first_valid_index()
+        s0 = (w["R0_always_sell"].loc[start:] * df.loc[start:, "R_var"]).dropna().iloc[0::21]
+        is_ = s0.loc[:rules.SPLIT]
+        oos = s0.loc[s0.index > pd.Timestamp(rules.SPLIT)]
+        self.assertEqual(len(is_) + len(oos), len(s0))
+        self.assertTrue(is_.index.max() < oos.index.min())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -79,7 +79,7 @@ def main():
         sr_avg_period[k] = float(np.mean(per_off_period))
         s0 = ret[k].dropna().iloc[0::WINDOW]
         s_is = s0.loc[:SPLIT]
-        s_oos = s0.loc[SPLIT:].iloc[1:]
+        s_oos = s0.loc[s0.index > pd.Timestamp(SPLIT)]
         st = su.describe(s0, PPY)
         rows.append(
             {
