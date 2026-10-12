@@ -94,6 +94,33 @@
       48.44177214448159
     ]
   ],
+  "breakeven_strike": {
+    "1999-2018": {
+      "mean_realized_vol": 16.276249783920694,
+      "breakeven_strike": 19.07090488095476,
+      "n": 5010
+    },
+    "1999-2013": {
+      "mean_realized_vol": 17.769716273044402,
+      "breakeven_strike": 20.673338342518235,
+      "n": 3773
+    },
+    "2014-2018": {
+      "mean_realized_vol": 11.720995892680795,
+      "breakeven_strike": 13.01709641820194,
+      "n": 1237
+    },
+    "2008-2009 only": {
+      "mean_realized_vol": 29.658037031851784,
+      "breakeven_strike": 34.73905808425013,
+      "n": 505
+    },
+    "excluding 2008-2009": {
+      "mean_realized_vol": 14.776182622942848,
+      "breakeven_strike": 16.40699730227701,
+      "n": 4505
+    }
+  },
   "share_by_decline": {
     "-0.05": {
       "share_1999_2018": 0.109,

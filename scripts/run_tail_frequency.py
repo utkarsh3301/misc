@@ -72,6 +72,23 @@ def main():
         print(f"  {a.date()} to {b.date()}  peak realized vol {peak:.0f}")
     res["episodes_rv40"] = [[str(a.date()), str(b.date()), float(d.loc[a:b, 'rv_vol'].max())] for a, b in episodes]
 
+    print("\n== break-even strike for a short variance seller: sqrt of the mean forward realized variance (vol points)")
+    var_w = (d["rv_vol"] / 100.0) ** 2
+    subsets = {
+        "1999-2018": var_w,
+        "1999-2013": var_w.loc[:"2013-12-31"],
+        "2014-2018": var_w.loc["2014-01-01":"2018-11-30"],
+        "2008-2009 only": var_w.loc["2008-01-01":"2009-12-31"],
+        "excluding 2008-2009": var_w.loc[~var_w.index.year.isin([2008, 2009])],
+    }
+    be = {}
+    for name, x in subsets.items():
+        mean_vol = float((100.0 * np.sqrt(x)).mean())
+        strike = float(100.0 * np.sqrt(x.mean()))
+        be[name] = {"mean_realized_vol": mean_vol, "breakeven_strike": strike, "n": int(len(x))}
+        print(f"  {name:22s} mean realized vol {mean_vol:6.2f}   break-even strike {strike:6.2f}   (n={len(x)})")
+    res["breakeven_strike"] = be
+
     print("\n== 21-day S&P 500 log return: frequency of declines")
     rows = []
     for thr in [-0.05, -0.10, -0.15, -0.20]:

@@ -21,6 +21,13 @@ rv_vol_at_least
   2009-01-09 to 2009-03-20  peak realized vol 50
   2011-07-13 to 2011-08-08  peak realized vol 48
 
+== break-even strike for a short variance seller: sqrt of the mean forward realized variance (vol points)
+  1999-2018              mean realized vol  16.28   break-even strike  19.07   (n=5010)
+  1999-2013              mean realized vol  17.77   break-even strike  20.67   (n=3773)
+  2014-2018              mean realized vol  11.72   break-even strike  13.02   (n=1237)
+  2008-2009 only         mean realized vol  29.66   break-even strike  34.74   (n=505)
+  excluding 2008-2009    mean realized vol  14.78   break-even strike  16.41   (n=4505)
+
 == 21-day S&P 500 log return: frequency of declines
                     share_1999_2018  share_2014_2018
 return_at_or_below                                  
