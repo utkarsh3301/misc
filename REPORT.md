@@ -161,6 +161,9 @@ Why the premium exists, per the mechanism literature: end users are net long ind
 | Overnight and weekend effects | Options mispriced over closures | B5, B6; section 4.7 | No; frictions swamp | **Mechanism confirmed,** profit accrues to market makers |
 | FOMC and macro-day volatility | Premium highest on event days | F13 | No | **Unverified** |
 | Structural: Section 1256, European cash settled, box spreads | Rules | D1, F22 | n/a | **Definite, not alpha** |
+| Put-call parity and borrow-cost arbitrage (conversions, reversals) | Prices violate parity in the direction short-sale costs predict | J1 | Persists after options and lending costs per the authors | **Closest to a definite edge in the literature, but conditional:** it needs the ability to short and borrow stock, the largest gaps sit in costly-to-short stocks, and the evidence is a 2004 paper; I found no sign a retail trader can capture it |
+| Early exercise and dividend capture | Free money from exercising deep in-the-money calls | J3 | n/a | **No retail free lunch found:** early exercise is rational mainly for institutions facing short-sale, transaction or funding frictions |
+| Dealer-gamma timing and intraday momentum | Option-dealer hedging moves prices late in the session | J2, C4 | n/a | **Mixed and unverified as an option edge:** intraday momentum linked to gamma hedging is documented in futures (J2) while 0DTE gamma was found not to amplify returns (C4) |
 | Mechanical management (50% profit target, exit at 21 days) | Higher return or lower drawdown than holding to expiry | G6 | Often unstated | **Unverified:** vendor in-sample backtests only, no Sharpe ratios, no independent study |
 | Covered-call ETFs | High income | C6, H1 | n/a | **Unverifiable here;** equity beta plus short volatility |
 | Crypto option selling | Large premium | F15 | n/a | **Unverified;** short samples, extreme tails |

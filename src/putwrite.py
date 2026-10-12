@@ -76,14 +76,13 @@ def put_write_backtest(
     if root is not None and "root" in chain.columns:
         chain = chain[chain["root"] == root]
     puts = chain[chain["cp"] == "P"]
-    dates = sorted(puts["quote_date"].unique())
+    by_day = {pd.Timestamp(k): g for k, g in puts.groupby("quote_date")}  # one pass over the chain, not one scan per date
     trades = []
     next_entry = pd.Timestamp.min
-    for d in dates:
-        d = pd.Timestamp(d)
+    for d in sorted(by_day):
         if d < next_entry:
             continue
-        day = puts[puts["quote_date"] == d]
+        day = by_day[d]
         dte = (day["expiry"] - d).dt.days
         day = day[dte >= min_dte]
         if fill == "bid":
