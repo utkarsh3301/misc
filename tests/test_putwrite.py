@@ -141,6 +141,47 @@ class TestNoOverlappingPositions(unittest.TestCase):
         self.assertTrue((t["entry"].iloc[1:].values >= t["expiry"].iloc[:-1].values).all())
 
 
+class TestRealDataShapes(unittest.TestCase):
+    def test_duplicate_row_labels_from_concatenated_files(self):
+        a = fixture_chain()
+        b = fixture_chain()
+        b["quote_date"] = b["quote_date"] + pd.Timedelta(days=0)
+        both = pd.concat([a.iloc[:9], a.iloc[9:]])  # same labels as a plain concat of two files would give
+        both.index = list(range(9)) + list(range(len(a) - 9))  # deliberate duplicates
+        t = pw.put_write_backtest(both, SETTLE, RATE)
+        self.assertEqual(list(t["strike"]), [1850.0, 1750.0])
+
+    def test_nan_delta_falls_back_to_black_scholes_and_never_crashes(self):
+        ch = fixture_chain()
+        ch["iv"] = 0.15
+        ch["underlying"] = 2000.0
+        ch.loc[(ch["quote_date"] == "2020-01-02") & (ch["strike"] == 1850), "delta"] = np.nan
+        t = pw.put_write_backtest(ch, SETTLE, RATE, target_delta=0.16)
+        self.assertEqual(len(t), 2)
+        allnan = ch.copy()
+        allnan["delta"] = np.nan
+        allnan = allnan.drop(columns=["iv", "underlying"])
+        self.assertEqual(len(pw.put_write_backtest(allnan, SETTLE, RATE)), 0)
+
+    def test_positive_vendor_deltas_are_treated_by_absolute_value(self):
+        ch = fixture_chain()
+        ch["delta"] = ch["delta"].abs()
+        t = pw.put_write_backtest(ch, SETTLE, RATE)
+        self.assertEqual(list(t["strike"]), [1850.0, 1750.0])
+
+    def test_root_filter_separates_am_and_pm_settled_series(self):
+        am = fixture_chain()
+        am["root"] = "SPX"
+        pm = fixture_chain()
+        pm["root"] = "SPXW"
+        pm["bid"] = pm["bid"] + 1.0  # different quotes for the same strike and expiry
+        both = pd.concat([am, pm])
+        t_am = pw.put_write_backtest(both, SETTLE, RATE, root="SPX")
+        t_pm = pw.put_write_backtest(both, SETTLE, RATE, root="SPXW")
+        self.assertAlmostEqual(t_am["premium"].iloc[0], 6.0)
+        self.assertAlmostEqual(t_pm["premium"].iloc[0], 7.0)
+
+
 class TestCommandLinePlumbing(unittest.TestCase):
     def test_cli_runs_end_to_end_on_a_fixture(self):
         import importlib.util

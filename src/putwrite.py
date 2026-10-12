@@ -32,13 +32,16 @@ def bs_put_delta(spot, strike, t_years, rate, div_yield, iv):
 
 
 def _abs_delta(day, entry_date, rate_for_delta, div_yield):
-    if "delta" in day.columns and day["delta"].notna().any():
-        return day["delta"].abs()
-    t = ((day["expiry"] - entry_date).dt.days / 365.0).clip(lower=1e-6)
-    return pd.Series(
-        [abs(bs_put_delta(s, k, tt, rate_for_delta, div_yield, v)) for s, k, tt, v in zip(day["underlying"], day["strike"], t, day["iv"])],
-        index=day.index,
-    )
+    """Absolute put delta: the vendor delta where present, a Black-Scholes delta from iv and underlying elsewhere."""
+    out = day["delta"].abs() if "delta" in day.columns else pd.Series(np.nan, index=day.index)
+    missing = out.isna()
+    if missing.any() and {"iv", "underlying"}.issubset(day.columns):
+        t = ((day["expiry"] - entry_date).dt.days / 365.0).clip(lower=1e-6)
+        for i in day.index[missing]:
+            iv, u = day.at[i, "iv"], day.at[i, "underlying"]
+            if pd.notna(iv) and pd.notna(u) and iv > 0:
+                out.at[i] = abs(bs_put_delta(u, day.at[i, "strike"], t.at[i], rate_for_delta, div_yield, iv))
+    return out
 
 
 def _rate_on(rates, date):
@@ -58,13 +61,20 @@ def put_write_backtest(
     fee_per_contract=0.0,
     multiplier=100,
     div_yield=0.0,
+    root=None,
 ):
-    """Return a DataFrame with one row per trade."""
+    """Return a DataFrame with one row per trade.
+
+    root: if given and the chain has a `root` column (for example SPX versus SPXW), keep only that root so that
+    AM and PM settled series sharing a strike and expiry are not mixed.
+    """
     if fill not in ("bid", "mid"):
         raise ValueError("fill must be 'bid' or 'mid'")
-    chain = chain.copy()
+    chain = chain.copy().reset_index(drop=True)  # unique labels even if files were concatenated
     chain["quote_date"] = pd.to_datetime(chain["quote_date"])
     chain["expiry"] = pd.to_datetime(chain["expiry"])
+    if root is not None and "root" in chain.columns:
+        chain = chain[chain["root"] == root]
     puts = chain[chain["cp"] == "P"]
     dates = sorted(puts["quote_date"].unique())
     trades = []
@@ -89,7 +99,9 @@ def put_write_backtest(
             continue
         sub = day[day["expiry"] == ex]
         rate = _rate_on(rates, d)
-        ad = _abs_delta(sub, d, rate, div_yield)
+        ad = _abs_delta(sub, d, rate, div_yield).dropna()
+        if ad.empty:
+            continue
         pick = sub.loc[(ad - target_delta).abs().idxmin()]
         premium = float(pick["bid"]) if fill == "bid" else float((pick["bid"] + pick["ask"]) / 2.0)
         strike = float(pick["strike"])
