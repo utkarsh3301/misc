@@ -1,0 +1,26 @@
+coverage: 1926-07-01 to 2018-11-01 months: 1109
+
+Mkt-RF: full-sample annual Sharpe 0.43, t 4.13 over 92 years
+
+SMB: full-sample annual Sharpe 0.22, t 2.16 over 92 years
+
+HML: full-sample annual Sharpe 0.37, t 3.53 over 92 years
+
+series  window_years  n_windows  share_t_above_1.645  share_t_above_1.96  share_t_above_3  share_mean_negative  median_t
+Mkt-RF             3       1074                0.311               0.225            0.064                0.178     1.004
+Mkt-RF             5       1050                0.343               0.281            0.088                0.174     1.196
+Mkt-RF            10        990                0.445               0.305            0.168                0.084     1.563
+Mkt-RF            20        870                0.652               0.551            0.247                0.000     2.123
+Mkt-RF            30        750                0.951               0.799            0.267                0.000     2.546
+   SMB             3       1074                0.177               0.116            0.036                0.436     0.248
+   SMB             5       1050                0.190               0.140            0.041                0.364     0.449
+   SMB            10        990                0.241               0.111            0.037                0.267     0.795
+   SMB            20        870                0.261               0.139            0.000                0.115     1.011
+   SMB            30        750                0.353               0.195            0.000                0.017     1.398
+   HML             3       1074                0.244               0.168            0.034                0.241     0.737
+   HML             5       1050                0.277               0.185            0.039                0.149     1.000
+   HML            10        990                0.504               0.323            0.026                0.055     1.652
+   HML            20        870                0.822               0.700            0.190                0.000     2.386
+   HML            30        750                0.933               0.851            0.543                0.000     3.099
+
+saved results/rolling_premium_verifiability.csv

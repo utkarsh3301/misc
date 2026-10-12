@@ -1,0 +1,33 @@
+Block 1: Sharpe ratios as published (gross), Jun 1986 to Dec 2015, about 29.5 years
+  2015 window: SR_put=0.67 SR_spx=0.47 diff=0.20 over 29.5 years
+    assumed correlation 0.80: t(diff) = 1.49
+    assumed correlation 0.85: t(diff) = 1.70
+    assumed correlation 0.90: t(diff) = 2.05
+    assumed correlation 0.95: t(diff) = 2.80
+
+Block 2: Cboe figures to Aug 2023 (annual return, annual std), risk-free rate ASSUMED
+  rf=0.025: SR_put=0.67 SR_spx=0.48 diff=0.19 over 37.1 years
+    assumed correlation 0.80: t(diff) = 1.59
+    assumed correlation 0.85: t(diff) = 1.82
+    assumed correlation 0.90: t(diff) = 2.20
+    assumed correlation 0.95: t(diff) = 3.00
+  rf=0.034: SR_put=0.58 SR_spx=0.42 diff=0.16 over 37.1 years
+    assumed correlation 0.80: t(diff) = 1.39
+    assumed correlation 0.85: t(diff) = 1.59
+    assumed correlation 0.90: t(diff) = 1.93
+    assumed correlation 0.95: t(diff) = 2.66
+  rf=0.045: SR_put=0.48 SR_spx=0.35 diff=0.13 over 37.1 years
+    assumed correlation 0.80: t(diff) = 1.12
+    assumed correlation 0.85: t(diff) = 1.29
+    assumed correlation 0.90: t(diff) = 1.56
+    assumed correlation 0.95: t(diff) = 2.17
+
+Block 3: implied linear CAPM alpha of PUT from summary figures (illustrative, gross of costs)
+  inputs: PUT 10.0% and S&P 500 total return 10.1% a year, beta 0.55 (1988 to 2018 figures reported in a search summary
+  attributed to Russell Investments); return volatilities 10.1% and 15.3% (CXO, 1986 to 2015); 31 years; risk-free ASSUMED.
+  rf=0.025: alpha = 3.32% a year, residual vol = 5.6%, iid t = 3.3
+  rf=0.034: alpha = 2.91% a year, residual vol = 5.6%, iid t = 2.9
+  rf=0.045: alpha = 2.42% a year, residual vol = 5.6%, iid t = 2.4
+  Caveats: windows are mixed; the iid t ignores autocorrelation; a LINEAR benchmark is the wrong model for a short-gamma payoff
+  (Broadie, Chernov, Johannes 2009), so the alpha is better read as the price of crash exposure than as free excess return;
+  all of it is before trading costs and before any fund fee (the WisdomTree PUT fund launched at a 0.38% expense ratio).

@@ -1,0 +1,104 @@
+{
+  "unusable_open_years": [
+    1999,
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2012,
+    2013
+  ],
+  "sample": [
+    "2007-01-03",
+    "2018-12-31",
+    2518
+  ],
+  "by_gap_class": {
+    "1d": {
+      "n": 1974,
+      "gap_days_mean": 1.0,
+      "overnight_var_bp2": 446.981,
+      "intraday_var_bp2": 14699.71,
+      "c2c_var_bp2": 16326.063,
+      "overnight_var_per_cal_day": 446.981
+    },
+    "2d": {
+      "n": 22,
+      "gap_days_mean": 2.0,
+      "overnight_var_bp2": 1421.532,
+      "intraday_var_bp2": 17681.495,
+      "c2c_var_bp2": 20583.047,
+      "overnight_var_per_cal_day": 710.766
+    },
+    "4d+": {
+      "n": 68,
+      "gap_days_mean": 4.015,
+      "overnight_var_bp2": 763.897,
+      "intraday_var_bp2": 12716.973,
+      "c2c_var_bp2": 15876.036,
+      "overnight_var_per_cal_day": 190.275
+    },
+    "weekend3d": {
+      "n": 454,
+      "gap_days_mean": 3.0,
+      "overnight_var_bp2": 643.971,
+      "intraday_var_bp2": 19665.445,
+      "c2c_var_bp2": 23307.521,
+      "overnight_var_per_cal_day": 214.657
+    }
+  },
+  "summary": {
+    "intraday_var_bp2": 15567.548131430342,
+    "overnight_1d_var_bp2": 446.9811836350877,
+    "overnight_weekend_var_bp2": 643.9706211624869,
+    "weekend_over_ordinary_overnight": 1.4407108055989666,
+    "overnight_share_of_c2c": 0.028368855848949603
+  },
+  "weekday_c2c_var_bp2": {
+    "Mon": 22699.006,
+    "Tue": 18593.72,
+    "Wed": 16754.688,
+    "Thu": 18071.218,
+    "Fri": 12229.75
+  },
+  "monday_over_other_days": 1.383044715839987,
+  "subperiods": {
+    "first half": {
+      "weekend_over_ordinary_overnight": 1.538784431384967,
+      "overnight_share_c2c": 0.015012992531574142
+    },
+    "second half": {
+      "weekend_over_ordinary_overnight": 1.370737554191724,
+      "overnight_share_c2c": 0.08256267397254309
+    }
+  },
+  "weekend_vs_ordinary_c2c": {
+    "1999-2018": {
+      "n_weekend": 910,
+      "n_ordinary": 3940,
+      "variance_ratio": 1.2457205316528812,
+      "mean_abs_return_ratio": 1.0164788833706027
+    },
+    "ex 2008-2009": {
+      "n_weekend": 819,
+      "n_ordinary": 3544,
+      "variance_ratio": 1.013866754738121,
+      "mean_abs_return_ratio": 0.9668014189335258
+    },
+    "1999-2007": {
+      "n_weekend": 410,
+      "n_ordinary": 1771,
+      "variance_ratio": 0.9656078496327478,
+      "mean_abs_return_ratio": 0.9578502537797708
+    },
+    "2010-2018": {
+      "n_weekend": 409,
+      "n_ordinary": 1773,
+      "variance_ratio": 1.0811439007309356,
+      "mean_abs_return_ratio": 0.9776484006305838
+    }
+  }
+}

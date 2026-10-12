@@ -1,0 +1,104 @@
+{
+  "n_trials": 6,
+  "table": {
+    "R0_always_sell": {
+      "share_invested": 1.0,
+      "months": 47,
+      "mean_per_month": 0.2125,
+      "sharpe_offset0": 0.7812,
+      "sharpe_avg_21_grids": 0.8047,
+      "sharpe_grid_min": 0.4907,
+      "sharpe_grid_max": 1.1667,
+      "sharpe_in_sample_offset0": 0.6202,
+      "sharpe_out_of_sample_offset0": 0.8431,
+      "worst_month": -4.0428,
+      "skew": -3.2429
+    },
+    "R1_vix_above_1y_median": {
+      "share_invested": 0.4894,
+      "months": 47,
+      "mean_per_month": 0.1542,
+      "sharpe_offset0": 1.4561,
+      "sharpe_avg_21_grids": 0.8325,
+      "sharpe_grid_min": -0.1197,
+      "sharpe_grid_max": 2.3521,
+      "sharpe_in_sample_offset0": 2.1801,
+      "sharpe_out_of_sample_offset0": 0.8755,
+      "worst_month": -1.144,
+      "skew": -0.4517
+    },
+    "R2_exante_vrp_positive": {
+      "share_invested": 0.8085,
+      "months": 47,
+      "mean_per_month": 0.1305,
+      "sharpe_offset0": 0.4884,
+      "sharpe_avg_21_grids": 0.6663,
+      "sharpe_grid_min": 0.4482,
+      "sharpe_grid_max": 0.9689,
+      "sharpe_in_sample_offset0": 0.0902,
+      "sharpe_out_of_sample_offset0": 0.8206,
+      "worst_month": -4.0428,
+      "skew": -3.1612
+    },
+    "R3_vix_below_20": {
+      "share_invested": 0.9149,
+      "months": 47,
+      "mean_per_month": 0.1898,
+      "sharpe_offset0": 0.6997,
+      "sharpe_avg_21_grids": 0.6384,
+      "sharpe_grid_min": 0.3139,
+      "sharpe_grid_max": 1.0039,
+      "sharpe_in_sample_offset0": 0.4694,
+      "sharpe_out_of_sample_offset0": 0.8431,
+      "worst_month": -4.0428,
+      "skew": -3.1984
+    },
+    "R4_vol_managed_cap2": {
+      "share_invested": 1.0,
+      "months": 47,
+      "mean_per_month": 0.2197,
+      "sharpe_offset0": 0.5728,
+      "sharpe_avg_21_grids": 0.8584,
+      "sharpe_grid_min": 0.4384,
+      "sharpe_grid_max": 1.4273,
+      "sharpe_in_sample_offset0": 0.5389,
+      "sharpe_out_of_sample_offset0": 0.498,
+      "worst_month": -6.4316,
+      "skew": -3.457
+    },
+    "R5_skip_after_loss_below_minus1": {
+      "share_invested": 0.9362,
+      "months": 47,
+      "mean_per_month": 0.2081,
+      "sharpe_offset0": 0.7671,
+      "sharpe_avg_21_grids": 0.749,
+      "sharpe_grid_min": 0.4193,
+      "sharpe_grid_max": 1.1873,
+      "sharpe_in_sample_offset0": 0.5542,
+      "sharpe_out_of_sample_offset0": 0.8927,
+      "worst_month": -4.0428,
+      "skew": -3.2544
+    }
+  },
+  "deflated_sharpe_grid_average": {
+    "R0_always_sell": 0.8332340706980381,
+    "R1_vix_above_1y_median": 0.902531327045626,
+    "R2_exante_vrp_positive": 0.7929711589389028,
+    "R3_vix_below_20": 0.7828170469005271,
+    "R4_vol_managed_cap2": 0.8408751968241714,
+    "R5_skip_after_loss_below_minus1": 0.8175152460063702
+  },
+  "deflated_sharpe_offset0": {
+    "R0_always_sell": 0.6823678316384183,
+    "R1_vix_above_1y_median": 0.9542858523553887,
+    "R2_exante_vrp_positive": 0.526367536127737,
+    "R3_vix_below_20": 0.6445971365327587,
+    "R4_vol_managed_cap2": 0.5752976749562961,
+    "R5_skip_after_loss_below_minus1": 0.6758926411071626
+  },
+  "best_in_sample_rule": "R1_vix_above_1y_median",
+  "best_in_sample_rule_oos_sharpe": 0.8754570324095414,
+  "baseline_oos_sharpe": 0.8430719718215973,
+  "sample_start": "2015-01-02",
+  "split": "2016-12-31"
+}

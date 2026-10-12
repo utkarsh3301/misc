@@ -1,0 +1,63 @@
+== A. cost sensitivity: sell at (VIX - c) vol points
+          var_mean  var_sharpe  var_t_nw  vol_mean  vol_sharpe  vol_t_nw
+c_volpts                                                                
+0.0          0.236       0.943     2.615     0.202       1.954     5.445
+0.5          0.176       0.650     1.804     0.172       1.598     4.474
+1.0          0.109       0.370     1.027     0.140       1.243     3.496
+1.5          0.033       0.105     0.287     0.105       0.888     2.511
+2.0         -0.053      -0.147    -0.415     0.066       0.534     1.521
+2.5         -0.153      -0.383    -1.077     0.024       0.181     0.527
+3.0         -0.269      -0.604    -1.697    -0.022      -0.170    -0.469
+  break-even cost (vol points of selling concession) where mean payoff = 0: {'var': 1.7, 'vol': 2.76}
+
+== B. null-hypothesis bootstrap p-values (stationary bootstrap, mean block 3 months, demeaned null)
+  var: offset0 p=0.0068  median over other offsets p=0.0055  worst offset p=0.0537
+  vol: offset0 p=0.0000  median over other offsets p=0.0000  worst offset p=0.0000
+
+== C. leverage view on the offset-0 monthly series (compounded, no costs, hold to expiry)
+  R_var: worst window = -4.44, mean = 0.231, months of average gains erased by the worst window = 19.2
+ target_vol  scale_on_unit_notional  worst_month  max_drawdown  cagr  final_equity
+       0.05                   0.016       -0.070        -0.070 0.043         1.231
+       0.10                   0.031       -0.140        -0.140 0.085         1.495
+       0.15                   0.047       -0.210        -0.210 0.126         1.789
+       0.20                   0.063       -0.280        -0.280 0.163         2.104
+       0.30                   0.094       -0.419        -0.419 0.228         2.748
+  R_vol: worst window = -1.33, mean = 0.209, months of average gains erased by the worst window = 6.4
+ target_vol  scale_on_unit_notional  worst_month  max_drawdown  cagr  final_equity
+       0.05                   0.038       -0.050        -0.050 0.098         1.581
+       0.10                   0.076       -0.101        -0.101 0.201         2.462
+       0.15                   0.113       -0.151        -0.151 0.310         3.771
+       0.20                   0.151       -0.201        -0.201 0.424         5.682
+       0.30                   0.227       -0.302        -0.302 0.665        12.270
+
+== D. alpha after market and convexity controls (all daily windows, HAC 20 lags)
+  R_var {'alpha_linear': 0.133, 'alpha_linear_t': 1.553, 'alpha_quadratic': 0.278, 'alpha_quadratic_t': 4.354, 'mkt_beta_quadratic_model': 15.951, 'mkt_sq_coef': -136.731, 'r2_linear': 0.373, 'r2_quadratic': 0.437}
+  R_vol {'alpha_linear': 0.156, 'alpha_linear_t': 5.133, 'alpha_quadratic': 0.209, 'alpha_quadratic_t': 7.939, 'mkt_beta_quadratic_model': 7.227, 'mkt_sq_coef': -50.169, 'r2_linear': 0.446, 'r2_quadratic': 0.498}
+
+== E. window length sensitivity
+  20 {'vix_above_realized': 0.816, 'mean_gap_volpts': 3.022, 'mean_R_var': 0.239, 't_nw_R_var': 2.706, 'mean_R_vol': 0.204, 't_nw_R_vol': 5.623}
+  21 {'vix_above_realized': 0.817, 'mean_gap_volpts': 3.004, 'mean_R_var': 0.236, 't_nw_R_var': 2.615, 'mean_R_vol': 0.202, 't_nw_R_vol': 5.445}
+  22 {'vix_above_realized': 0.809, 'mean_gap_volpts': 2.987, 'mean_R_var': 0.232, 't_nw_R_var': 2.529, 'mean_R_vol': 0.2, 't_nw_R_vol': 5.28}
+
+== F. descriptive: premium by VIX tercile at the window start (all daily windows; overlapping, so no t-stats)
+         vix_min  vix_max  mean_vix  mean_realized_vol  mean_gap_volpts  mean_R_var  share_R_var_negative  worst_R_var
+tercile                                                                                                               
+low         9.14    12.53    11.220              8.863            2.357       0.200                 0.148       -5.347
+middle     12.54    15.15    13.722             11.128            2.594       0.207                 0.199       -4.853
+high       15.16    40.74    19.240             15.175            4.065       0.300                 0.202       -3.269
+
+== G. estimator and inference robustness
+  HAC lags 10: t(R_var) = 3.16   t(R_vol) = 6.63
+  HAC lags 20: t(R_var) = 2.62   t(R_vol) = 5.44
+  HAC lags 30: t(R_var) = 2.47   t(R_vol) = 5.11
+  HAC lags 42: t(R_var) = 2.38   t(R_vol) = 4.90
+  HAC lags 63: t(R_var) = 2.30   t(R_vol) = 4.66
+  range-based realized variance (Parkinson + overnight gap) instead of close-to-close:
+    mean_gap_volpts_range_based                   4.468
+    share_vix_above_range_based                   0.907
+    mean_R_var_range_based                        0.434
+    t_nw_R_var_range_based                        7.115
+    corr_range_vs_close_to_close_vol              0.964
+    mean_ratio_range_over_close_variance          0.826
+
+saved results/vrp_robustness.json
