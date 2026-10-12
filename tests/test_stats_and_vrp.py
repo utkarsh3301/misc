@@ -1,5 +1,6 @@
 """Correctness tests. Run from the repo root:  PYTHONPATH=. python3 -m unittest discover -s tests -v"""
 import importlib.util
+import json
 import os
 import unittest
 
@@ -176,6 +177,36 @@ class TestRuleSplit(unittest.TestCase):
         oos = s0.loc[s0.index > pd.Timestamp(rules.SPLIT)]
         self.assertEqual(len(is_) + len(oos), len(s0))
         self.assertTrue(is_.index.max() < oos.index.min())
+
+
+class TestIndexCompareCommandLine(unittest.TestCase):
+    def test_run_index_compare_end_to_end_on_bundled_equity_series(self):
+        import contextlib
+        import io
+        import tempfile
+
+        from arch.data import nasdaq
+
+        mod = load_script("run_index_compare")
+        spx = sp500.load()["Close"]
+        ndx = nasdaq.load()["Close"]
+        with tempfile.TemporaryDirectory() as td:
+            spx.rename("level").rename_axis("date").to_csv(os.path.join(td, "spx.csv"))
+            ndx.rename("level").rename_axis("date").to_csv(os.path.join(td, "ndx.csv"))
+            argv = ["--strategy", os.path.join(td, "ndx.csv"), "--benchmark", os.path.join(td, "spx.csv"), "--freq", "monthly", "--rf", "0.02"]
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                import sys
+
+                old = sys.argv
+                sys.argv = ["run_index_compare.py"] + argv
+                try:
+                    mod.main()
+                finally:
+                    sys.argv = old
+            res = json.loads(buf.getvalue())
+        self.assertGreater(res["capm"]["beta"], 1.0)
+        self.assertGreater(res["n"], 200)
 
 
 if __name__ == "__main__":

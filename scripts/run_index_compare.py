@@ -18,8 +18,9 @@ from src import index_compare as ic
 
 def load_levels(path):
     df = pd.read_csv(path)
-    df.iloc[:, 0] = pd.to_datetime(df.iloc[:, 0])
-    df = df.set_index(df.columns[0]).sort_index()
+    first = df.columns[0]
+    df[first] = pd.to_datetime(df[first])
+    df = df.set_index(first).sort_index()
     num = df.select_dtypes("number")
     return num.iloc[:, -1].dropna()
 

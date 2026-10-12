@@ -31,5 +31,5 @@ bash run_all.sh
 ## Layout
 
 - `REPORT.md` the study. `ledger/claims.md` the source-tracked claims.
-- `src/` shared code. `scripts/` one script per analysis. `tests/` unit tests (look-ahead checks included).
+- `src/` shared code, including `putwrite.py` (a ready harness for Design A, tested on a hand-built fixture only). `scripts/` one script per analysis. `tests/` unit tests (look-ahead checks included).
 - `results/` JSON, CSV and text logs of every analysis; `results/figures/` charts with CSV copies of their data.
