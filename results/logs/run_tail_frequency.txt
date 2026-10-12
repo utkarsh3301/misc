@@ -28,6 +28,25 @@ rv_vol_at_least
   2008-2009 only         mean realized vol  29.66   break-even strike  34.74   (n=505)
   excluding 2008-2009    mean realized vol  14.78   break-even strike  16.41   (n=4505)
 
+== mean 21-day realized volatility by five-year block (trailing windows, calendar-year blocks)
+  2013-2017:  11.04
+  2014-2018:  11.69   <- the premium-test window
+  2012-2016:  12.23
+  2003-2007:  12.40
+  2011-2015:  13.81
+  2010-2014:  14.31
+  2002-2006:  14.34
+  2004-2008:  15.92
+  2001-2005:  16.58
+  2009-2013:  17.37
+  2000-2004:  18.76
+  2005-2009:  18.89
+  1999-2003:  20.19
+  2006-2010:  20.27
+  2008-2012:  22.00
+  2007-2011:  22.38
+  rank of 2014-2018 (1 = calmest): 2 of 16
+
 == 21-day S&P 500 log return: frequency of declines
                     share_1999_2018  share_2014_2018
 return_at_or_below                                  

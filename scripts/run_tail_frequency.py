@@ -89,6 +89,15 @@ def main():
         print(f"  {name:22s} mean realized vol {mean_vol:6.2f}   break-even strike {strike:6.2f}   (n={len(x)})")
     res["breakeven_strike"] = be
 
+    print("\n== mean 21-day realized volatility by five-year block (trailing windows, calendar-year blocks)")
+    rv_tr = (100.0 * np.sqrt((252.0 / W) * (r ** 2).rolling(W).sum())).dropna()
+    blocks = pd.Series({y: float(rv_tr.loc[f"{y}-01-01":f"{y + 4}-12-31"].mean()) for y in range(1999, 2015)}).sort_values()
+    rank = list(blocks.index).index(2014) + 1
+    for y, v in blocks.items():
+        print(f"  {y}-{y + 4}: {v:6.2f}" + ("   <- the premium-test window" if y == 2014 else ""))
+    print(f"  rank of 2014-2018 (1 = calmest): {rank} of {len(blocks)}")
+    res["five_year_blocks"] = {"mean_by_start_year": {str(k): v for k, v in blocks.items()}, "rank_of_2014_block": rank, "n_blocks": int(len(blocks))}
+
     print("\n== 21-day S&P 500 log return: frequency of declines")
     rows = []
     for thr in [-0.05, -0.10, -0.15, -0.20]:
@@ -103,6 +112,7 @@ def main():
     print(t2.round(3).to_string())
     res["share_by_decline"] = t2.round(4).to_dict(orient="index")
     print(f"  worst 21-day log return: 1999-2018 {full['ret'].min():.3f}  2014-2018 {sub['ret'].min():.3f}")
+    res["worst_21d_log_return"] = {"1999-2018": float(full["ret"].min()), "2014-2018": float(sub["ret"].min())}
 
     print("\n== arithmetic grid (not data): short variance payoff per unit strike variance = 1 - (RV/VIX)^2, uncapped")
     vix_levels = [12, 15, 20, 25]

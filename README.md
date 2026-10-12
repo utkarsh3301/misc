@@ -21,6 +21,13 @@ so there is no option-chain or index-level backtest here. Real data used is the 
 web-search summaries and are second-hand; see `ledger/claims.md` for each claim, its source and a status code.
 REPORT.md section 8 lists what to unlock to finish the verification.
 
+## Data note
+
+The real series (S&P 500, VIX, Fama-French factors) are the copies bundled in the `arch` Python package and are not
+downloaded by this repo. Figure data files under `results/figures/data/` contain values derived from them, including
+daily VIX levels for the figure showing priced versus delivered volatility. Check the original vendors' terms before
+redistributing those files.
+
 ## Reproduce
 
 ```
