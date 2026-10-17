@@ -1,0 +1,5 @@
+market,side,in_sample,best_is_pair,is_sharpe,oos_sharpe,oos_rank,oos_cagr,oos_max_dd,oos_win_rate,oos_bh_sharpe,oos_bh_cagr,is_oos_rank_corr
+NIFTY,long_only,to 2016,5/100,0.483079,0.765021,62 of 99,0.07963,-0.175953,0.411765,0.730264,0.11007,0.335461
+NIFTY,long_short,to 2016,10/80,0.33412,0.491914,21 of 99,0.0684405,-0.292968,0.3125,0.730264,0.11007,0.261719
+BANKNIFTY,long_only,to 2017,20/40,0.822087,0.477893,31 of 99,0.0597216,-0.216883,0.5,0.510715,0.0923802,0.793012
+BANKNIFTY,long_short,to 2017,10/30,0.491755,0.426051,1 of 99,0.0723458,-0.268861,0.447761,0.510715,0.0923802,0.767953

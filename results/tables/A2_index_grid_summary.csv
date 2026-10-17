@@ -1,0 +1,5 @@
+market,side,pairs,share_beating_bh_sharpe_pct,share_beating_bh_cagr_pct,share_pf_above_1_pct,median_sharpe,best_sharpe,best_pair,median_win_rate,bh_sharpe,luck_threshold_sharpe
+BANKNIFTY,long_only,99,0.30303,0.010101,1,0.438624,0.780149,10/30,0.434783,0.554834,0.841242
+BANKNIFTY,long_short,99,0,0,0.727273,0.0374855,0.455758,10/30,0.313725,0.554834,0.543428
+NIFTY,long_only,99,0.808081,0.111111,1,0.557613,0.694608,25/50,0.421875,0.457277,0.784292
+NIFTY,long_short,99,0,0,0.989899,0.247987,0.439376,25/50,0.333333,0.457277,0.509107

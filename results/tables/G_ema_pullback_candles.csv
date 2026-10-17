@@ -1,0 +1,25 @@
+universe,side,entry,trades,win_rate,payoff,profit_factor,expectancy_bps,ci_low_bps,ci_high_bps,random_mean_bps,p_random
+NSE stocks (daily),long,any candle trigger,6747,0.374685,1.65134,0.989474,-2.25975,-15.0165,10.2579,4.74347,0.824351
+NSE stocks (daily),long,control: any bar closing in trend direction,17310,0.367707,1.68594,0.980448,-3.90911,-10.9031,3.53476,-1.74618,0.712575
+NSE stocks (daily),long,control: any bar touching the EMA,29843,0.334484,1.75673,0.882921,-18.6786,-23.0632,-13.8965,-15.0508,0.926148
+NSE stocks (daily),short,any candle trigger,5998,0.33928,1.68055,0.862964,-33.1063,-46.9662,-18.4225,-38.0995,0.291417
+NSE stocks (daily),short,control: any bar closing in trend direction,12871,0.342475,1.73146,0.901841,-21.8565,-31.6123,-12.881,-34.3711,0.0159681
+NSE stocks (daily),short,control: any bar touching the EMA,20006,0.340948,1.734,0.897048,-18.4273,-25.0113,-11.8549,-24.5954,0.0319361
+NSE indices (daily),long,any candle trigger,187,0.379679,1.75486,1.07409,7.30216,-27.2847,40.8068,12.5744,0.590818
+NSE indices (daily),long,control: any bar closing in trend direction,503,0.365805,1.82579,1.05312,4.90659,-15.286,25.1348,8.09859,0.578842
+NSE indices (daily),long,control: any bar touching the EMA,939,0.315229,2.17822,1.00273,0.182521,-12.0574,13.0298,-0.688068,0.469062
+NSE indices (daily),short,any candle trigger,108,0.305556,1.62731,0.716014,-45.6751,-107.523,14.523,-26.6052,0.746507
+NSE indices (daily),short,control: any bar closing in trend direction,332,0.337349,1.65963,0.844901,-19.0004,-47.229,11.1238,-17.1558,0.522954
+NSE indices (daily),short,control: any bar touching the EMA,555,0.347748,1.6043,0.85533,-12.8463,-30.512,5.5636,-10.5202,0.606786
+Global markets (daily),long,any candle trigger,753,0.378486,2.14774,1.30792,35.5425,-0.100218,75.3717,42.3465,0.602794
+Global markets (daily),long,control: any bar closing in trend direction,1427,0.37281,1.89784,1.1281,13.0836,-3.27356,31.1428,33.8108,0.93014
+Global markets (daily),long,control: any bar touching the EMA,2232,0.34767,2.07608,1.10648,9.42304,-5.69602,24.563,24.1998,0.92016
+Global markets (daily),short,any candle trigger,456,0.320175,2.18704,1.03003,4.18279,-37.0277,50.5033,-31.9119,0.0419162
+Global markets (daily),short,control: any bar closing in trend direction,993,0.33434,1.93672,0.972757,-3.58395,-27.1191,22.0008,-34.5583,0.00998004
+Global markets (daily),short,control: any bar touching the EMA,1631,0.320662,1.97058,0.930156,-6.93512,-21.691,9.00821,-24.8148,0.0299401
+NIFTY/BANKNIFTY (15m),long,any candle trigger,3426,0.359895,1.09876,0.617771,-6.31677,-7.32625,-5.22104,-8.03076,0.0179641
+NIFTY/BANKNIFTY (15m),long,control: any bar closing in trend direction,6415,0.349805,1.12189,0.603578,-6.65301,-7.44631,-5.80267,-8.00768,0.0159681
+NIFTY/BANKNIFTY (15m),long,control: any bar touching the EMA,10425,0.317986,1.12907,0.526424,-7.08276,-7.62557,-6.55191,-7.79564,0.0259481
+NIFTY/BANKNIFTY (15m),short,any candle trigger,2744,0.396501,1.15129,0.756401,-4.63997,-6.21546,-3.03784,-5.92968,0.0658683
+NIFTY/BANKNIFTY (15m),short,control: any bar closing in trend direction,5536,0.403721,1.21449,0.82229,-3.32935,-4.44833,-2.13559,-6.00076,0.00199601
+NIFTY/BANKNIFTY (15m),short,control: any bar touching the EMA,8887,0.352875,1.28189,0.699009,-4.94019,-5.72365,-4.15693,-6.16552,0.00399202

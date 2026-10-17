@@ -1,0 +1,5 @@
+market,costs,best_in_sample,is_sharpe,is_cagr,oos_sharpe,oos_cagr,configs_with_oos_sharpe_above_0_pct,is_oos_rank_corr
+NIFTY,gross,5m EMA 12/26,1.54482,0.1942,1.585,0.234698,0.95,0.285714
+NIFTY,2026 costs,15m EMA 20/50,-0.920777,-0.108037,-1.41947,-0.19182,0,0.912782
+BANKNIFTY,gross,1m EMA 5/13,1.5965,0.293746,-0.516812,-0.099815,0.7,0.276692
+BANKNIFTY,2026 costs,15m EMA 20/50,-0.378634,-0.0754608,-1.20689,-0.232606,0,0.815038

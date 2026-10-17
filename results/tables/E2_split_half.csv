@@ -1,0 +1,13 @@
+universe,pattern,scope,half,split_date,full_sample_t,events,hit_rate,base_hit_rate,t
+NSE stocks (daily),piercing_line,in context,first half,2016-09-30,-2.12144,432,0.476852,0.517069,-1.10544
+NSE stocks (daily),bearish_marubozu,all,first half,2016-09-30,3.3638,1020,0.534314,0.481691,2.96802
+NSE stocks (daily),piercing_line,in context,second half,2016-09-30,-2.12144,390,0.448454,0.50246,-1.88902
+NSE stocks (daily),bearish_marubozu,all,second half,2016-09-30,3.3638,1368,0.513991,0.494804,1.66182
+NSE indices (daily),bullish_harami,all,first half,2017-10-26,2.84514,191,0.701571,0.544635,3.59575
+NSE indices (daily),bullish_harami,in context,first half,2017-10-26,2.0511,94,0.734043,0.556328,2.85741
+NSE indices (daily),bullish_marubozu,in context,first half,2017-10-26,2.40906,103,0.621359,0.531146,2.41461
+NSE indices (daily),bullish_harami,all,second half,2017-10-26,2.84514,194,0.541237,0.530728,0.583839
+NSE indices (daily),bullish_harami,in context,second half,2017-10-26,2.0511,88,0.568182,0.538129,0.281565
+NSE indices (daily),bullish_marubozu,in context,second half,2017-10-26,2.40906,30,0.6,0.533365,0.542878
+Global markets (daily),hanging_man,in context,first half,2013-04-04,-2.42898,177,0.350282,0.445354,-2.54179
+Global markets (daily),hanging_man,in context,second half,2013-04-04,-2.42898,185,0.416216,0.448355,-0.775379
