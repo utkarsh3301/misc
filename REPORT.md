@@ -629,8 +629,10 @@ python -m pytest tests                # engine execution rules
 ```
 
 The three experiment scripts take under a minute each once the data is
-built. `scripts/fetch_data.py` downloads only the files it needs (a few
-hundred MB); the full intraday repository is about 22 GB.
+built. `scripts/fetch_data.py` uses partial, sparse clones and downloads
+only the files it needs: for the intraday data about 160 MB of git
+objects (830 MB on disk) instead of the full 22 GB repository. A fresh run
+of it reproduced all five intraday series exactly.
 
 ### Sources
 
